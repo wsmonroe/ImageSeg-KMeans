@@ -18,12 +18,12 @@ iterations = 5
 #	Parse command-line arguments
 #	sets K, inputName & outputName
 if len(sys.argv) < 4:
-	print "Error: Insufficient arguments, imageSegmentation takes three arguments"
+	print("Error: Insufficient arguments, imageSegmentation takes three arguments")
 	sys.exit()
 else:
 	K = int(sys.argv[1])
 	if K < 3:
-		print "Error: K has to be greater than 2"
+		print("Error: K has to be greater than 2")
 		sys.exit()
 	inputName = sys.argv[2]
 	outputName = sys.argv[3]
@@ -61,7 +61,7 @@ centers = np.ndarray(shape=(K,5))
 for index, center in enumerate(centers):
 	centers[index] = np.random.uniform(minValue, maxValue, 5)
 
-for iteration in xrange(iterations):
+for iteration in range(iterations):
 	#	Set pixels to their cluster
 	for idx, data in enumerate(dataVector_scaled):
 		distanceToCenters = np.ndarray(shape=(K))
@@ -82,7 +82,7 @@ for iteration in xrange(iterations):
 	##################################################################################################
 
 	#	Move centers to the centroid of their cluster
-	for i in xrange(K):
+	for i in range(K):
 		dataInCenter = []
 
 		for index, item in enumerate(pixelClusterAppartenance):
@@ -92,7 +92,7 @@ for iteration in xrange(iterations):
 		centers[i] = np.mean(dataInCenter, axis=0)
 
 	#TODO check for convergence
-	print "Centers Iteration num", iteration, ": \n", centers
+	print("Centers Iteration num", iteration, ": \n", centers)
 
 #	set the pixels on original image to be that of the pixel's cluster's centroid
 for index, item in enumerate(pixelClusterAppartenance):
@@ -103,9 +103,9 @@ for index, item in enumerate(pixelClusterAppartenance):
 #	Save image
 image = Image.new("RGB", (imageW, imageH))
 
-for y in xrange(imageH):
-	for x in xrange(imageW):
-	 	image.putpixel((x, y), (int(dataVector[y * imageW + x][0]), 
+for y in range(imageH):
+	for x in range(imageW):
+	 	image.putpixel((x, y), (int(dataVector[y * imageW + x][0]),
 	 							int(dataVector[y * imageW + x][1]),
 	 							int(dataVector[y * imageW + x][2])))
 image.save(outputName)
